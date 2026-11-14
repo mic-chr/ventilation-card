@@ -1,9 +1,8 @@
 # Ventilation Card
 
-Animated Lovelace card for ventilation units, made for **Flexit Nordic** (BACnet integration `flexit_bacnet`):
-spinning fans and rotor, moving air flow, temperatures at the four house symbols, fan and rotor values,
-electric heater (grey at 0 W, colored when heating), filter alarm, statistics below the card
-and an optional PIN-protected settings menu. Tap any value to open its history.
+Animated Lovelace card for ventilation units: spinning fans and rotor, moving air flow, temperatures at the four house symbols, fan and rotor values, electric heater (grey at 0 W, colored when heating), filter alarm, statistics below the card and an optional PIN-protected settings menu. Tap any value to open its history.
+
+Officially made for **Flexit Nordic** (BACnet integration `flexit_bacnet`), but it should also work with other brands, as it is highly customizable: every entity can be mapped in the editor or in YAML.
 
 Languages: **Deutsch, Norsk, English**. Light, dark or Home Assistant theme. Visual card editor included.
 
