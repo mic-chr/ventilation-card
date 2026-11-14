@@ -375,7 +375,7 @@ class VentilationCard extends HTMLElement {
       .sr ha-icon{color:var(--state-icon-color,var(--secondary-text-color))}
       .sr .v{font-weight:500}
       .menu>*{display:block;margin-top:8px}
-    </style><ha-card style="--hs-color:${esc(colors.heater)}"><div class="wrap" style="--fs:1">`;
+    </style><ha-card><div class="wrap" style="--fs:1;--hs-color:${esc(colors.heater)}">`;
     h += `<img class="bg" alt="" src="${esc(buildSvg(c, colors, names))}">`;
     if (this._show('heater_symbol')) {
       const col = esc(colors.heater);

@@ -7,6 +7,15 @@ and an optional PIN-protected settings menu. Tap any value to open its history.
 
 Languages: **Deutsch, Norsk, English**. Light, dark or Home Assistant theme. Visual card editor included.
 
+## Preview
+
+| Light | Dark |
+| --- | --- |
+| ![Ventilation Card, light](docs/ventilation-card-light.gif) | ![Ventilation Card, dark](docs/ventilation-card-dark.gif) |
+
+Still images: [light](docs/ventilation-card-light.png), [dark](docs/ventilation-card-dark.png).
+The previews are rendered in a test page with sample values, not from a live Home Assistant.
+
 ## Installation (HACS)
 
 1. HACS → three dots → **Custom repositories** → add `https://github.com/mic-chr/ventilation-card`, category **Dashboard**.
