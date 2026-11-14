@@ -70,12 +70,13 @@ It is stored readable in an automation and is no security feature.
 
 # Deutsch
 
-Animierte Lovelace-Karte für **Flexit Nordic** Lüftungsgeräte: drehende Ventilatoren und Rotor, Luftstrom, Temperaturen an den vier Häuschen,
-Heizregister (grau bei 0 W, farbig beim Heizen), Filter-Alarm, Statistik unter dem Bild und ein optionales Einstellungsmenü mit PIN.
-Ein Tipp auf einen Wert öffnet den Verlauf. Sprachen Deutsch, Norsk, English, Hell/Dunkel, grafischer Karten-Editor.
+Animierte Lovelace-Karte für Lüftungsgeräte: drehende Ventilatoren und Rotor, bewegter Luftstrom, Temperaturen an den vier Häuschen, Lüfter- und Rotorwerte, Heizregister (grau bei 0 W, farbig beim Heizen), Filter-Alarm, Statistik unter dem Bild und ein optionales Einstellungsmenü mit PIN. Ein Tipp auf einen Wert öffnet den Verlauf.
 
-**Installation:** HACS → Menü → *Benutzerdefinierte Repositories* → `https://github.com/mic-chr/ventilation-card`, Kategorie *Dashboard* →
-installieren → Browser neu laden → Karte hinzufügen → *Ventilation Card*. Minimal reicht:
+Offiziell für **Flexit Nordic** gebaut (BACnet-Integration `flexit_bacnet`), sollte aber auch mit anderen Marken funktionieren, da sie sehr anpassbar ist: Jede Entity lässt sich im Editor oder im YAML zuordnen.
+
+Sprachen: **Deutsch, Norsk, English**. Hell, Dunkel oder Theme von Home Assistant. Grafischer Karten-Editor inklusive.
+
+**Installation:** HACS → Menü → *Benutzerdefinierte Repositories* → `https://github.com/mic-chr/ventilation-card`, Kategorie *Dashboard* → installieren → Browser neu laden → Karte hinzufügen → *Ventilation Card*. Minimal reicht:
 
 ```yaml
 type: custom:ventilation-card
@@ -83,4 +84,32 @@ device_prefix: flexit_nordic
 language: de
 ```
 
-Das PIN-Menü braucht zwei Helfer und zwei Automationen (`examples/pin-menu-helpers.yaml`). Der Filter lässt sich nicht aus Home Assistant zurücksetzen.
+`device_prefix` ist der Teil der Entity-IDs nach der Domain, z. B. `sensor.flexit_nordic_exhaust_air_temperature` → `flexit_nordic`. Einzelne Entities lassen sich im Editor (Abschnitt „Entities") oder im YAML überschreiben, z. B. `entity_temp_exhaust: sensor.mein_sensor`. Für „heute" und „gestern" braucht die Karte einen täglichen kWh-Zähler: `entity_heater_daily_meter`.
+
+**PIN-Menü:** Das Menü zeigt ein PIN-Feld. Bei richtiger PIN erscheinen Lüfterstufen, Kamin- und Dunstabzug-Einstellungen, Schalter und Solltemperatur und sperren nach einigen Minuten wieder. Es braucht zwei Helfer und zwei Automationen, siehe [`examples/pin-menu-helpers.yaml`](examples/pin-menu-helpers.yaml). Die PIN schützt nur vor versehentlichem Verstellen, sie steht lesbar in einer Automation und ist keine Sicherheitsfunktion.
+
+**Hinweise:** Der Filter lässt sich nicht aus Home Assistant zurücksetzen, die Integration hat keine Reset-Entity. Zurücksetzen am Gerät oder in der Flexit-GO-App. Die Vorschaubilder zeigen Beispielwerte.
+
+---
+
+# Norsk
+
+Animert Lovelace-kort for ventilasjonsaggregater: roterende vifter og rotor, bevegelig luftstrøm, temperaturer ved de fire husene, verdier for vifter og rotor, elbatteri (grått ved 0 W, farget når det varmer), filteralarm, statistikk under kortet og en valgfri PIN-beskyttet innstillingsmeny. Trykk på en verdi for å åpne historikken.
+
+Offisielt laget for **Flexit Nordic** (BACnet-integrasjonen `flexit_bacnet`), men skal også kunne brukes med andre merker, siden det er svært tilpassbart: Hver entitet kan tilordnes i editoren eller i YAML.
+
+Språk: **Deutsch, Norsk, English**. Lyst, mørkt eller tema fra Home Assistant. Grafisk kortredigerer er inkludert.
+
+**Installasjon:** HACS → meny → *Egendefinerte repositorier* → `https://github.com/mic-chr/ventilation-card`, kategori *Dashboard* → installer → last nettleseren på nytt → legg til kort → *Ventilation Card*. Minimum som trengs:
+
+```yaml
+type: custom:ventilation-card
+device_prefix: flexit_nordic
+language: no
+```
+
+`device_prefix` er delen av entitets-ID-ene etter domenet, f.eks. `sensor.flexit_nordic_exhaust_air_temperature` → `flexit_nordic`. Enkeltentiteter kan overstyres i editoren (avsnittet «Entities») eller i YAML, f.eks. `entity_temp_exhaust: sensor.min_sensor`. For «i dag» og «i går» trenger kortet en daglig kWh-teller: `entity_heater_daily_meter`.
+
+**PIN-meny:** Menyen viser et PIN-felt. Ved riktig PIN vises viftetrinn, peis- og kjøkkenhette-innstillinger, brytere og settpunkt for temperatur, og menyen låses igjen etter noen minutter. Den trenger to hjelpere og to automasjoner, se [`examples/pin-menu-helpers.yaml`](examples/pin-menu-helpers.yaml). PIN-koden beskytter bare mot utilsiktede endringer, den står lesbart i en automasjon og er ingen sikkerhetsfunksjon.
+
+**Merknader:** Filteret kan ikke nullstilles fra Home Assistant, integrasjonen har ingen nullstillings-entitet. Nullstill på aggregatet eller i Flexit GO-appen. Forhåndsvisningene viser eksempelverdier.
