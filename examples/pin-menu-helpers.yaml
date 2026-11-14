@@ -1,0 +1,55 @@
+# Only needed for the optional PIN submenu (show_menu: true).
+# Replace 1234 with your own PIN. Put the parts in configuration.yaml / automations.yaml,
+# check the configuration and reload. Or create the helpers and automations in the UI.
+
+# configuration.yaml
+input_text:
+  flexit_pin_eingabe:
+    name: Flexit PIN Eingabe
+    mode: password
+    min: 0
+    max: 8
+    icon: mdi:lock
+input_boolean:
+  flexit_menue_entsperrt:
+    name: Flexit Menue entsperrt
+    icon: mdi:lock-open
+
+# automations.yaml
+- alias: Flexit Menü PIN prüfen
+  mode: queued
+  max: 5
+  trigger:
+    - platform: state
+      entity_id: input_text.flexit_pin_eingabe
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state is not none and trigger.to_state.state not in ['', 'unknown', 'unavailable'] }}"
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == '1234' }}"
+          sequence:
+            - service: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.flexit_menue_entsperrt
+    - service: input_text.set_value
+      target:
+        entity_id: input_text.flexit_pin_eingabe
+      data:
+        value: ""
+- alias: Flexit Menü automatisch sperren
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_boolean.flexit_menue_entsperrt
+      to: "on"
+      for:
+        minutes: 5
+    - platform: homeassistant
+      event: start
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.flexit_menue_entsperrt

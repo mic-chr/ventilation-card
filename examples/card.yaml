@@ -1,0 +1,15 @@
+# Minimal: only needs the device prefix of your Flexit Nordic entities
+type: custom:ventilation-card
+device_prefix: flexit_nordic
+
+# Everything optional:
+# language: de            # de | no | en (default: Home Assistant language)
+# theme: auto             # auto | light | dark
+# name: Flexit Nordic
+# entity_heater_daily_meter: sensor.my_heater_kwh_today   # daily meter in kWh (resets at midnight)
+# filter_months: 12
+# show_menu: true         # PIN submenu, needs the helpers from examples/pin-menu-helpers.yaml
+# menu_custom:
+#   - name: My own settings        # entry without entity = heading
+#   - entity: input_number.my_value
+#     name: My value
