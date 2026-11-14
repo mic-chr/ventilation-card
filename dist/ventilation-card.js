@@ -129,7 +129,7 @@ const UI = {
       show_heater_symbol: 'Heizregister-Symbol', show_filter_alarm: 'Filter-Alarm', show_frame: 'Rahmen', show_flow: 'Luftstrom-Animation', show_name: 'Name anzeigen',
       show_stats: 'Statistik unter der Karte', show_days: 'Filter in Tagen und Restlaufzeit', show_menu: 'PIN-Untermenü',
       font_scale: 'Schriftgröße (%)', fan_speed: 'Lüfter-Drehung (Sekunden pro Umdrehung)', rotor_speed: 'Rotor-Geschwindigkeit (Sekunden)', filter_months: 'Filterwechsel-Intervall (Monate)', lock_minutes: 'Menü sperrt automatisch nach (Minuten, nur Anzeige)',
-      color_exhaust: 'Farbe Fortluft', color_outdoor: 'Farbe Außenluft', color_extract: 'Farbe Abluft', color_supply: 'Farbe Zuluft', color_heater: 'Farbe Heizregister',
+      color_exhaust: 'Farbe Fortluft', color_outdoor: 'Farbe Außenluft', color_extract: 'Farbe Abluft', color_supply: 'Farbe Zuluft', color_heater: 'Farbe Heizregister', color_fan: 'Farbe Motoren (aktiv)',
       name_exhaust: 'Name Fortluft', name_outdoor: 'Name Außenluft', name_extract: 'Name Abluft', name_supply: 'Name Zuluft', name_heater: 'Name Heizregister', name_eff: 'Text vor Wirkungsgrad', name_rot: 'Text vor Rotor',
       name_today: 'Zeile „heute"', name_yest: 'Zeile „gestern"', name_filter: 'Zeile Filter', name_rest: 'Zeile Restlaufzeit ({n} = Monate)',
       entity_temp_exhaust: 'Temperatur Fortluft', entity_temp_extract: 'Temperatur Abluft', entity_temp_outdoor: 'Temperatur Außenluft', entity_temp_supply: 'Temperatur Zuluft',
@@ -149,7 +149,7 @@ const UI = {
       show_heater_symbol: 'Symbol varmebatteri', show_filter_alarm: 'Filteralarm', show_frame: 'Ramme', show_flow: 'Luftstrøm-animasjon', show_name: 'Vis navn',
       show_stats: 'Statistikk under kortet', show_days: 'Filter i dager og gjenstående tid', show_menu: 'PIN-undermeny',
       font_scale: 'Skriftstørrelse (%)', fan_speed: 'Viftedreining (sekunder per omdreining)', rotor_speed: 'Rotorhastighet (sekunder)', filter_months: 'Filterbytte-intervall (måneder)', lock_minutes: 'Menyen låses etter (minutter, bare visning)',
-      color_exhaust: 'Farge avkast', color_outdoor: 'Farge uteluft', color_extract: 'Farge avtrekk', color_supply: 'Farge tilluft', color_heater: 'Farge varmebatteri',
+      color_exhaust: 'Farge avkast', color_outdoor: 'Farge uteluft', color_extract: 'Farge avtrekk', color_supply: 'Farge tilluft', color_heater: 'Farge varmebatteri', color_fan: 'Farge motorer (aktive)',
       name_exhaust: 'Navn avkast', name_outdoor: 'Navn uteluft', name_extract: 'Navn avtrekk', name_supply: 'Navn tilluft', name_heater: 'Navn varmebatteri', name_eff: 'Tekst før virkningsgrad', name_rot: 'Tekst før rotor',
       name_today: 'Linje «i dag»', name_yest: 'Linje «i går»', name_filter: 'Linje filter', name_rest: 'Linje gjenstående tid ({n} = måneder)',
       entity_temp_exhaust: 'Temperatur avkast', entity_temp_extract: 'Temperatur avtrekk', entity_temp_outdoor: 'Temperatur uteluft', entity_temp_supply: 'Temperatur tilluft',
@@ -169,7 +169,7 @@ const UI = {
       show_heater_symbol: 'Heater symbol', show_filter_alarm: 'Filter alarm', show_frame: 'Frame', show_flow: 'Air flow animation', show_name: 'Show name',
       show_stats: 'Statistics below the card', show_days: 'Filter in days and time remaining', show_menu: 'PIN submenu',
       font_scale: 'Font size (%)', fan_speed: 'Fan rotation (seconds per turn)', rotor_speed: 'Rotor speed (seconds)', filter_months: 'Filter change interval (months)', lock_minutes: 'Menu locks after (minutes, display only)',
-      color_exhaust: 'Color exhaust air', color_outdoor: 'Color outdoor air', color_extract: 'Color extract air', color_supply: 'Color supply air', color_heater: 'Color heater',
+      color_exhaust: 'Color exhaust air', color_outdoor: 'Color outdoor air', color_extract: 'Color extract air', color_supply: 'Color supply air', color_heater: 'Color heater', color_fan: 'Color motors (active)',
       name_exhaust: 'Name exhaust air', name_outdoor: 'Name outdoor air', name_extract: 'Name extract air', name_supply: 'Name supply air', name_heater: 'Name heater', name_eff: 'Text before efficiency', name_rot: 'Text before rotor',
       name_today: 'Row "today"', name_yest: 'Row "yesterday"', name_filter: 'Row filter', name_rest: 'Row time remaining ({n} = months)',
       entity_temp_exhaust: 'Temperature exhaust air', entity_temp_extract: 'Temperature extract air', entity_temp_outdoor: 'Temperature outdoor air', entity_temp_supply: 'Temperature supply air',
@@ -183,7 +183,7 @@ const UI = {
   }
 };
 
-const DEF_COLORS = { exhaust: '#A8693A', outdoor: '#3FA34D', extract: '#F2B01E', supply: '#1F5FBF', heater: '#E8612E' };
+const DEF_COLORS = { exhaust: '#A8693A', outdoor: '#3FA34D', extract: '#F2B01E', supply: '#1F5FBF', heater: '#E8612E', fan: '#43A047' };
 
 const entityDefaults = (p) => ({
   temp_exhaust: `sensor.${p}_exhaust_air_temperature`,
@@ -267,8 +267,6 @@ function buildSvg(c, colors, names) {
   s += `<g clip-path='url(%23rc)'><g class='st' stroke='${gray}' stroke-opacity='.6' stroke-width='1'><path d='${st}'/></g></g>`;
   const flt = (x, y, r) => `<g transform='translate(${x},${y})${r}'><rect x='-12' y='-12' width='24' height='24' rx='3' fill='none' stroke='${gray}' stroke-width='1.5'/><g fill='none' stroke='${gray}' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'><polyline points='-7,-8 7,-4 -7,0'/><polyline points='-7,0 7,4 -7,8'/><line x1='-7' y1='-8' x2='-7' y2='8'/></g></g>`;
   s += flt(520, 95, ' rotate(180)') + flt(150, 210, '');
-  const fn = (x, y, r) => `<g transform='translate(${x},${y}) rotate(${r})' stroke='${gray}' stroke-width='1.3' fill='none' stroke-linejoin='round'><line x1='0' y1='-40' x2='0' y2='-33' stroke-dasharray='2 2' stroke-width='1'/><rect x='-5' y='-33' width='10' height='10' rx='1'/><circle r='18'/><polygon points='-9,0 8,-10 8,10'/><circle cx='-13' cy='15' r='6.5'/><circle class='sp' cx='-13' cy='15' r='3.2' stroke-dasharray='14 6'/></g>`;
-  s += fn(200, 95, 0) + fn(480, 210, 180);
   const ic = (x, y, col, d, m) => `<g transform='translate(${x},${y}) scale(.9)' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M4 22L20 8L36 22V38H4Z' stroke='${gray}' stroke-width='2'/><rect x='15' y='28' width='10' height='7' stroke='${gray}' stroke-width='1.5'/><path d='${d}' stroke='${col}' stroke-width='3' marker-end='url(%23a${m})'/></g>`;
   s += ic(26, 77, C.a, 'M20 28V1', 1) + ic(26, 192, C.u, 'M-4 32H12', 2) + ic(622, 77, C.v, 'M31 17H24Q20 17 20 21V26', 3) + ic(622, 192, C.t, 'M20 27V21Q20 17 24 17H31', 4);
   s += `<g font-family='sans-serif' font-size='13' font-weight='500' fill='${gray}' text-anchor='middle' dominant-baseline='central'><text x='44' y='128'>${esc(names.exhaust)}</text><text x='44' y='243'>${esc(names.outdoor)}</text><text x='640' y='128'>${esc(names.extract)}</text><text x='640' y='243'>${esc(names.supply)}</text>`;
@@ -368,6 +366,12 @@ class VentilationCard extends HTMLElement {
       .hs{position:absolute;left:79.12%;top:70%;width:4.41%;transform:translate(-50%,-50%);pointer-events:none}
       .hs rect,.hs polyline{stroke:#888}
       .hs.on rect,.hs.on polyline{stroke:var(--hs-color)}
+      .fm{position:absolute;width:12.35%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible}
+      .fm g{stroke:#888;fill:none;stroke-width:1.3;stroke-linejoin:round}
+      .fm .sp{transform-box:fill-box;transform-origin:center;animation:sp ${Number(c.fan_speed) || 1}s linear infinite;animation-play-state:paused}
+      .fm.on g{stroke:var(--fan-color)}
+      .fm.on .sp{animation-play-state:running}
+      @keyframes sp{to{transform:rotate(360deg)}}
       .stats{padding:4px 16px 8px}
       .sr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-top:1px solid var(--divider-color);cursor:pointer;color:var(--primary-text-color)}
       .sr:first-child{border-top:none}
@@ -375,8 +379,11 @@ class VentilationCard extends HTMLElement {
       .sr ha-icon{color:var(--state-icon-color,var(--secondary-text-color))}
       .sr .v{font-weight:500}
       .menu>*{display:block;margin-top:8px}
-    </style><ha-card><div class="wrap" style="--fs:1;--hs-color:${esc(colors.heater)}">`;
+    </style><ha-card><div class="wrap" style="--fs:1;--hs-color:${esc(colors.heater)};--fan-color:${esc(colors.fan)}">`;
     h += `<img class="bg" alt="" src="${esc(buildSvg(c, colors, names))}">`;
+    [[200, 95, 0], [480, 210, 180]].forEach((m, i) => {
+      h += `<svg class="fm" id="fm${i}" viewBox="-42 -42 84 84" style="left:${(m[0] / 6.8).toFixed(2)}%;top:${(m[1] / 3).toFixed(2)}%"><g transform="rotate(${m[2]})"><line x1="0" y1="-40" x2="0" y2="-33" stroke-dasharray="2 2" stroke-width="1"/><rect x="-5" y="-33" width="10" height="10" rx="1"/><circle r="18"/><polygon points="-9,0 8,-10 8,10"/><circle cx="-13" cy="15" r="6.5"/><circle class="sp" cx="-13" cy="15" r="3.2" stroke-dasharray="14 6"/></g></svg>`;
+    });
     if (this._show('heater_symbol')) {
       const col = esc(colors.heater);
       h += `<svg class="hs" id="hs" viewBox="-15 -11 30 22"><rect x="-14" y="-10" width="28" height="20" rx="2" fill="none" stroke-width="1.5"/><polyline points="-11,0 -8,-6 -4,6 0,-6 4,6 8,-6 11,0" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -489,6 +496,12 @@ class VentilationCard extends HTMLElement {
       }
       el.textContent = (l.pre ? names[l.pre] : '') + txt;
     });
+    [['fan_exhaust_rpm', 'fan_exhaust_pct'], ['fan_supply_rpm', 'fan_supply_pct']].forEach((keys, i) => {
+      const fm = root.getElementById('fm' + i);
+      if (!fm) return;
+      const vals = keys.map((k) => this._num(this._ent(k)));
+      fm.classList.toggle('on', vals.some((v) => v !== null && v > 0));
+    });
     const hs = root.getElementById('hs');
     if (hs) {
       const v = this._num(this._ent('heater_power'));
@@ -556,7 +569,7 @@ const EDITOR_SECTIONS = (c, lang) => {
       { name: 'filter_months', selector: { number: { min: 1, max: 36, step: 1, mode: 'slider' } } },
       { name: 'lock_minutes', selector: { number: { min: 1, max: 30, step: 1, mode: 'slider' } } },
     ] },
-    { id: 'colors', title: U.sections.colors, schema: ['color_exhaust', 'color_outdoor', 'color_extract', 'color_supply', 'color_heater'].map(text) },
+    { id: 'colors', title: U.sections.colors, schema: ['color_exhaust', 'color_outdoor', 'color_extract', 'color_supply', 'color_heater', 'color_fan'].map(text) },
     { id: 'names', title: U.sections.names, schema: ['name_exhaust', 'name_outdoor', 'name_extract', 'name_supply', 'name_heater', 'name_eff', 'name_rot', 'name_today', 'name_yest', 'name_filter', 'name_rest'].map(text) },
     { id: 'entities', title: U.sections.entities, collapsed: true, schema: [
       ent('entity_temp_exhaust', 'sensor'), ent('entity_temp_extract', 'sensor'), ent('entity_temp_outdoor', 'sensor'), ent('entity_temp_supply', 'sensor'),
