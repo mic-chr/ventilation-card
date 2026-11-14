@@ -261,7 +261,6 @@ function buildSvg(c, colors, names) {
   s += `<clipPath id='rc'><rect x='326' y='58' width='28' height='190' rx='3'/></clipPath></defs>`;
   if (c.show_frame !== false) s += `<rect x='84' y='16' width='512' height='272' rx='14' fill='none' stroke='${gray}' stroke-opacity='.5' stroke-dasharray='4 4'/>`;
   s += `<g fill='none' stroke-width='7'><path d='M612 95H532M508 95H354' stroke='${C.v}'/><path d='M326 95H218M182 95H72' stroke='${C.a}'/><path d='M72 210H138M162 210H326' stroke='${C.u}'/><path d='M354 210H462M498 210H524M552 210H612' stroke='${C.t}'/></g>`;
-  if (c.show_flow !== false) s += `<path class='fl' d='M612 95H532M508 95H354M326 95H218M182 95H72M72 210H138M162 210H326M354 210H462M498 210H524M552 210H612' fill='none' stroke='white' stroke-opacity='.6' stroke-width='2'/>`;
   s += `<rect x='326' y='58' width='28' height='190' rx='3' fill='none' stroke='${gray}' stroke-width='1.5'/>`;
   let st = ''; for (let y = 52; y <= 250; y += 6) st += `M326 ${y}h28`;
   s += `<g clip-path='url(%23rc)'><g class='st' stroke='${gray}' stroke-opacity='.6' stroke-width='1'><path d='${st}'/></g></g>`;
@@ -366,6 +365,10 @@ class VentilationCard extends HTMLElement {
       .hs{position:absolute;left:79.12%;top:70%;width:4.41%;transform:translate(-50%,-50%);pointer-events:none}
       .hs rect,.hs polyline{stroke:#888}
       .hs.on rect,.hs.on polyline{stroke:var(--hs-color)}
+      .flow{position:absolute;left:0;top:0;width:100%;height:auto;pointer-events:none}
+      .flow path{fill:none;stroke:#fff;stroke-opacity:.6;stroke-width:2;stroke-dasharray:4 12;animation:fl .8s linear infinite;animation-play-state:paused}
+      .flow path.run{animation-play-state:running}
+      @keyframes fl{to{stroke-dashoffset:-16}}
       .fm{position:absolute;width:12.35%;transform:translate(-50%,-50%);pointer-events:none;overflow:visible}
       .fm g{stroke:#888;fill:none;stroke-width:1.3;stroke-linejoin:round}
       .fm .sp{transform-box:fill-box;transform-origin:center;animation:sp ${Number(c.fan_speed) || 1}s linear infinite;animation-play-state:paused}
@@ -381,6 +384,9 @@ class VentilationCard extends HTMLElement {
       .menu>*{display:block;margin-top:8px}
     </style><ha-card><div class="wrap" style="--fs:1;--hs-color:${esc(colors.heater)};--fan-color:${esc(colors.fan)}">`;
     h += `<img class="bg" alt="" src="${esc(buildSvg(c, colors, names))}">`;
+    if (c.show_flow !== false) {
+      h += `<svg class="flow" viewBox="0 0 680 300"><path id="fl0" d="M612 95H532M508 95H354M326 95H218M182 95H72"/><path id="fl1" d="M72 210H138M162 210H326M354 210H462M498 210H524M552 210H612"/></svg>`;
+    }
     [[200, 95, 0], [480, 210, 180]].forEach((m, i) => {
       h += `<svg class="fm" id="fm${i}" viewBox="-42 -42 84 84" style="left:${(m[0] / 6.8).toFixed(2)}%;top:${(m[1] / 3).toFixed(2)}%"><g transform="rotate(${m[2]})"><line x1="0" y1="-40" x2="0" y2="-33" stroke-dasharray="2 2" stroke-width="1"/><rect x="-5" y="-33" width="10" height="10" rx="1"/><circle r="18"/><polygon points="-9,0 8,-10 8,10"/><circle cx="-13" cy="15" r="6.5"/><circle class="sp" cx="-13" cy="15" r="3.2" stroke-dasharray="14 6"/></g></svg>`;
     });
@@ -500,7 +506,10 @@ class VentilationCard extends HTMLElement {
       const fm = root.getElementById('fm' + i);
       if (!fm) return;
       const vals = keys.map((k) => this._num(this._ent(k)));
-      fm.classList.toggle('on', vals.some((v) => v !== null && v > 0));
+      const run = vals.some((v) => v !== null && v > 0);
+      fm.classList.toggle('on', run);
+      const fl = root.getElementById('fl' + i);
+      if (fl) fl.classList.toggle('run', run);
     });
     const hs = root.getElementById('hs');
     if (hs) {

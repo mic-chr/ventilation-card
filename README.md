@@ -1,6 +1,6 @@
 # Ventilation Card
 
-Animated Lovelace card for ventilation units: spinning fans and rotor (fan motors green when running, grey when stopped), moving air flow, temperatures at the four house symbols, fan and rotor values, electric heater (grey at 0 W, colored when heating), filter alarm, statistics below the card and an optional PIN-protected settings menu. Tap any value to open its history.
+Animated Lovelace card for ventilation units: spinning fans and rotor (fan motors green when running, grey when stopped), air flow that stops with its fan, temperatures at the four house symbols, fan and rotor values, electric heater (grey at 0 W, colored when heating), filter alarm, statistics below the card and an optional PIN-protected settings menu. Tap any value to open its history.
 
 Officially made for **Flexit Nordic** (BACnet integration `flexit_bacnet`), but it should also work with other brands, as it is highly customizable: every entity can be mapped in the editor or in YAML.
 
@@ -70,7 +70,7 @@ It is stored readable in an automation and is no security feature.
 
 # Deutsch
 
-Animierte Lovelace-Karte für Lüftungsgeräte: drehende Ventilatoren und Rotor (Motoren grün im Betrieb, grau im Stillstand), bewegter Luftstrom, Temperaturen an den vier Häuschen, Lüfter- und Rotorwerte, Heizregister (grau bei 0 W, farbig beim Heizen), Filter-Alarm, Statistik unter dem Bild und ein optionales Einstellungsmenü mit PIN. Ein Tipp auf einen Wert öffnet den Verlauf.
+Animierte Lovelace-Karte für Lüftungsgeräte: drehende Ventilatoren und Rotor (Motoren grün im Betrieb, grau im Stillstand), Luftstrom, der mit seinem Lüfter stehen bleibt, Temperaturen an den vier Häuschen, Lüfter- und Rotorwerte, Heizregister (grau bei 0 W, farbig beim Heizen), Filter-Alarm, Statistik unter dem Bild und ein optionales Einstellungsmenü mit PIN. Ein Tipp auf einen Wert öffnet den Verlauf.
 
 Offiziell für **Flexit Nordic** gebaut (BACnet-Integration `flexit_bacnet`), sollte aber auch mit anderen Marken funktionieren, da sie sehr anpassbar ist: Jede Entity lässt sich im Editor oder im YAML zuordnen.
 
@@ -94,7 +94,7 @@ language: de
 
 # Norsk
 
-Animert Lovelace-kort for ventilasjonsaggregater: roterende vifter og rotor (motorer grønne i drift, grå ved stans), bevegelig luftstrøm, temperaturer ved de fire husene, verdier for vifter og rotor, elbatteri (grått ved 0 W, farget når det varmer), filteralarm, statistikk under kortet og en valgfri PIN-beskyttet innstillingsmeny. Trykk på en verdi for å åpne historikken.
+Animert Lovelace-kort for ventilasjonsaggregater: roterende vifter og rotor (motorer grønne i drift, grå ved stans), luftstrøm som stopper sammen med viften, temperaturer ved de fire husene, verdier for vifter og rotor, elbatteri (grått ved 0 W, farget når det varmer), filteralarm, statistikk under kortet og en valgfri PIN-beskyttet innstillingsmeny. Trykk på en verdi for å åpne historikken.
 
 Offisielt laget for **Flexit Nordic** (BACnet-integrasjonen `flexit_bacnet`), men skal også kunne brukes med andre merker, siden det er svært tilpassbart: Hver entitet kan tilordnes i editoren eller i YAML.
 
